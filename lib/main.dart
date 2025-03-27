@@ -1,5 +1,6 @@
 import 'package:childrens_book_app/models/app_state.dart';
 import 'package:childrens_book_app/screens/home_screen.dart';
+import 'package:childrens_book_app/widgets/main_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'screens/login_screen.dart';
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/login',
       routes: {
         '/login': (context) => const LoginScreen(),
-        '/home': (context) => const HomeScreen(),
+        '/home': (context) => const MainNavigation(),
       },
     );
   }

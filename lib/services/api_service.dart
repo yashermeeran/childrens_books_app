@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'package:childrens_book_app/models/category.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import '../models/book.dart';
 import '../models/user.dart';
 
 class ApiService {
@@ -74,6 +76,36 @@ class ApiService {
       );
     } else {
       throw Exception('Failed to login: ${response.body}');
+    }
+  }
+
+  Future<List<Book>> getBooks() async {
+    final headers = await _getHeaders();
+    final response = await http.get(
+      Uri.parse('$baseUrl/books'),
+      headers: headers,
+    );
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = jsonDecode(response.body);
+      return data.map((json) => Book.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to load books: ${response.body}');
+    }
+  }
+
+  Future<List<Category>> getCategories() async {
+    final headers = await _getHeaders();
+    final response = await http.get(
+      Uri.parse('$baseUrl/books/categories'),
+      headers: headers,
+    );
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = jsonDecode(response.body);
+      return data.map((json) => Category.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to load categories: ${response.body}');
     }
   }
 }
