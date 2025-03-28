@@ -1,4 +1,6 @@
 import 'package:childrens_book_app/models/app_state.dart';
+import 'package:childrens_book_app/screens/book_list_screen.dart';
+import 'package:childrens_book_app/screens/bookmarks_screen.dart';
 import 'package:childrens_book_app/screens/home_screen.dart';
 import 'package:childrens_book_app/widgets/main_navigation.dart';
 import 'package:flutter/material.dart';
@@ -42,6 +44,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/login': (context) => const LoginScreen(),
         '/home': (context) => const MainNavigation(),
+        '/book-list': (context) => const BookListScreen(),
+        '/bookmarks': (context) => const BookmarksScreen(),
       },
     );
   }
