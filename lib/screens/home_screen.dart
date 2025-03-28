@@ -1,6 +1,6 @@
 import 'package:childrens_book_app/models/app_state.dart';
 import 'package:childrens_book_app/models/category.dart' as app_models;
-import 'package:childrens_book_app/widgets/book_cart.dart';
+import 'package:childrens_book_app/widgets/book_card.dart';
 import 'package:childrens_book_app/widgets/category_card.dart';
 import 'package:childrens_book_app/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
@@ -38,61 +38,8 @@ class _HomeScreenState extends State<HomeScreen> {
     final appState = Provider.of<AppState>(context);
     final user = appState.currentUser;
     final isLoading = appState.isLoading;
-    final books = [
-      Book(
-        id: 1,
-        title: 'The Magic Forest',
-        author: 'Jane Smith',
-        category: 'Fiction',
-        coverImageUrl: 'https://picsum.photos/seed/book1/300/450',
-        description:
-            'Join Lucy on her adventure through the magical forest where she meets talking animals and discovers hidden treasures.',
-      ),
-      Book(
-        id: 2,
-        title: 'Dragon\'s Tale',
-        author: 'Michael Johnson',
-        category: 'Fiction',
-        coverImageUrl: 'https://picsum.photos/seed/book2/300/450',
-        description:
-            'A young dragon learns to breathe fire and finds his place in the dragon community.',
-      ),
-      Book(
-        id: 3,
-        title: 'Fluffy\'s Adventure',
-        author: 'Sarah Williams',
-        category: 'Animals',
-        coverImageUrl: 'https://picsum.photos/seed/book3/300/450',
-        description:
-            'Fluffy the cat gets lost in the big city and must find his way back home.',
-      ),
-      Book(
-        id: 4,
-        title: 'Bedtime for Teddy',
-        author: 'Emma Thompson',
-        category: 'Bedtime',
-        coverImageUrl: 'https://picsum.photos/seed/book4/300/450',
-        description:
-            'Teddy the bear doesn\'t want to go to sleep and comes up with many excuses to stay awake.',
-      ),
-      Book(
-        id: 5,
-        title: 'Counting with Monkeys',
-        author: 'David Brown',
-        category: 'Educational',
-        coverImageUrl: 'https://picsum.photos/seed/book5/300/450',
-        description:
-            'Learn to count from 1 to 10 with the help of playful monkeys.',
-      ),
-    ];
-    final categories = [
-      app_models.Category(id: 1, name: 'Fiction', color: 0xFFFF9800),
-      app_models.Category(id: 2, name: 'Science', color: 0xFF4CAF50),
-      app_models.Category(id: 3, name: 'Animals', color: 0xFF2196F3),
-      app_models.Category(id: 4, name: 'Bedtime', color: 0xFF9C27B0),
-      app_models.Category(id: 5, name: 'Educational', color: 0xFFE91E63),
-    ];
-
+    final books = appState.books;
+    final categories = appState.categories;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Children\'s Book App'),

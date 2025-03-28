@@ -30,6 +30,22 @@ class ApiService {
     await prefs.setString(userIdKey, userId.toString());
   }
 
+  Future<String?> getUserId() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(userIdKey);
+  }
+
+  Future<void> clearToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(tokenKey);
+    await prefs.remove(userIdKey);
+  }
+
+  Future<bool> isLoggedIn() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(tokenKey) != null;
+  }
+
   Future<Map<String, dynamic>> register(
       String username, String email, String password) async {
     final response = await http.post(
@@ -91,6 +107,22 @@ class ApiService {
       return data.map((json) => Book.fromJson(json)).toList();
     } else {
       throw Exception('Failed to load books: ${response.body}');
+    }
+  }
+
+  
+  Future<List<Book>> getBooksByCategory(String category) async {
+    final headers = await _getHeaders();
+    final response = await http.get(
+      Uri.parse('$baseUrl/books/category?category=$category'),
+      headers: headers,
+    );
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = jsonDecode(response.body);
+      return data.map((json) => Book.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to load books by category: ${response.body}');
     }
   }
 

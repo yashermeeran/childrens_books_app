@@ -21,6 +21,7 @@ class AppState with ChangeNotifier {
   Future<bool> login(String username, String password) async {
     try {
       _currentUser = await _apiService.login(username, password);
+      await fetchInitialData();
       notifyListeners();
       return true;
     } catch (e) {
@@ -30,7 +31,10 @@ class AppState with ChangeNotifier {
   }
 
   Future<void> fetchInitialData() async {
-    await Future.wait([]);
+    await Future.wait([ 
+      fetchCategories(),
+      fetchBooks(),
+      ]);
   }
 
   Future<bool> register(String username, String email, String password) async {
@@ -48,4 +52,46 @@ class AppState with ChangeNotifier {
     var isLoading = loading;
     notifyListeners();
   }
+
+  Future<void> fetchCategories() async {
+    setLoading(true);
+    
+    try {
+      _categories = await _apiService.getCategories();
+      setLoading(false);
+      notifyListeners();
+    } catch (e) {
+      setLoading(false);
+      notifyListeners();
+    }
+  }
+   Future<void> fetchBooks() async {
+    setLoading(true);
+    
+    try {
+      _books = await _apiService.getBooks();
+      setLoading(false);
+      notifyListeners();
+    } catch (e) {
+      setLoading(false);
+      notifyListeners();
+    }
+  }
+
+  Future<List<Book>> fetchBooksByCategory(String category) async {
+    setLoading(true);
+    
+    try {
+      final books = await _apiService.getBooksByCategory(category);
+      setLoading(false);
+      notifyListeners();
+      return books;
+    } catch (e) {
+      setLoading(false);
+      notifyListeners();
+      return [];
+    }
+  }
+
+  void logout() {}
 }
