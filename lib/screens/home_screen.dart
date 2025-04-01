@@ -18,6 +18,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final appState = Provider.of<AppState>(context, listen: false);
+      if (appState.books.isEmpty || appState.categories.isEmpty) {
+        appState.fetchInitialData();
+      }
+    });
   }
 
   void _openBookDetails(Book book) {
@@ -26,7 +32,8 @@ class _HomeScreenState extends State<HomeScreen> {
       arguments: book,
     );
   }
-   void _openCategoryBooks(app_models.Category category) {
+
+  void _openCategoryBooks(app_models.Category category) {
     Navigator.of(context).pushNamed(
       '/book-list',
       arguments: category,
@@ -73,7 +80,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     GridView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         childAspectRatio: 3 / 2,
                         crossAxisSpacing: 10,
@@ -81,8 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       itemCount: categories.length,
                       itemBuilder: (ctx, index) {
-                        return CategoryCard
-                        (
+                        return CategoryCard(
                           category: categories[index],
                           onTap: () => _openCategoryBooks(categories[index]),
                         );
@@ -102,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
-                        childAspectRatio: 0.7, 
+                        childAspectRatio: 0.7,
                         crossAxisSpacing: 10,
                         mainAxisSpacing: 10,
                       ),
@@ -121,4 +128,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
