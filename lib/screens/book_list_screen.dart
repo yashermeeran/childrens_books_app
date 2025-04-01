@@ -1,11 +1,10 @@
+import 'package:childrens_book_app/models/app_state.dart';
+import 'package:childrens_book_app/models/book.dart';
+import 'package:childrens_book_app/models/category.dart' as app_models;
 import 'package:childrens_book_app/widgets/book_card.dart';
+import 'package:childrens_book_app/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../models/app_state.dart';
-import '../models/book.dart';
-import '../models/category.dart' as app_models; 
-import '../widgets/loading_indicator.dart';
-import '../widgets/book_card.dart';
 
 class BookListScreen extends StatefulWidget {
   const BookListScreen({super.key});
@@ -25,16 +24,17 @@ class _BookListScreenState extends State<BookListScreen> {
   }
 
   Future<void> _loadBooks() async {
-    final category = ModalRoute.of(context)!.settings.arguments as app_models.Category;
+    final category =
+        ModalRoute.of(context)!.settings.arguments as app_models.Category;
     final appState = Provider.of<AppState>(context, listen: false);
-    
+
     setState(() {
       _isLoading = true;
     });
-    
+
     try {
       final books = await appState.fetchBooksByCategory(category.name);
-      
+
       if (mounted) {
         setState(() {
           _books = books;
@@ -46,7 +46,7 @@ class _BookListScreenState extends State<BookListScreen> {
         setState(() {
           _isLoading = false;
         });
-        
+
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Error loading books: ${e.toString()}'),
@@ -66,7 +66,8 @@ class _BookListScreenState extends State<BookListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final category = ModalRoute.of(context)!.settings.arguments as app_models.Category;
+    final category =
+        ModalRoute.of(context)!.settings.arguments as app_models.Category;
 
     return Scaffold(
       appBar: AppBar(
@@ -97,7 +98,8 @@ class _BookListScreenState extends State<BookListScreen> {
                   onRefresh: _loadBooks,
                   child: GridView.builder(
                     padding: const EdgeInsets.all(16),
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       childAspectRatio: 0.75,
                       crossAxisSpacing: 10,
@@ -115,4 +117,3 @@ class _BookListScreenState extends State<BookListScreen> {
     );
   }
 }
-
