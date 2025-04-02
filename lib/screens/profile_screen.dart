@@ -1,7 +1,7 @@
+import 'package:childrens_book_app/models/app_state.dart';
+import 'package:childrens_book_app/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../models/app_state.dart';
-import '../widgets/loading_indicator.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
