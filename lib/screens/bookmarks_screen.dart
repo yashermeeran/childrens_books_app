@@ -15,6 +15,7 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
   @override
   void initState() {
     super.initState();
+    // Refresh bookmarks when screen is opened
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<AppState>(context, listen: false).fetchBookmarks();
     });
@@ -36,6 +37,16 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
 
   void _removeBookmark(int bookmarkId) async {
     final appState = Provider.of<AppState>(context, listen: false);
+    final success = await appState.removeBookmark(bookmarkId);
+
+    if (success && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Bookmark deleted successfully'),
+          backgroundColor: Colors.green,
+        ),
+      );
+    }
   }
 
   @override

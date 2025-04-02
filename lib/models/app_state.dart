@@ -64,6 +64,7 @@ class AppState with ChangeNotifier {
     notifyListeners();
   }
 
+  // Fetch initial data
   Future<void> fetchInitialData() async {
     await Future.wait([
       fetchCategories(),
@@ -200,6 +201,39 @@ class AppState with ChangeNotifier {
     }
   }
 
+  Future<bool> addBookmark(int bookId, int pageNumber) async {
+    setLoading(true);
+
+    try {
+      final bookmark = await _apiService.addBookmark(bookId, pageNumber);
+      _bookmarks.add(bookmark);
+      setLoading(false);
+      notifyListeners();
+      return true;
+    } catch (e) {
+      setLoading(false);
+      notifyListeners();
+      return false;
+    }
+  }
+
+  Future<bool> removeBookmark(int bookmarkId) async {
+    setLoading(true);
+
+    try {
+      await _apiService.removeBookmark(bookmarkId);
+      _bookmarks.removeWhere((bookmark) => bookmark.id == bookmarkId);
+
+      setLoading(false);
+      notifyListeners();
+      return true;
+    } catch (e) {
+      setLoading(false);
+      notifyListeners();
+      return false;
+    }
+  }
+
   bool isPageBookmarked(int bookId, int pageNumber) {
     return _bookmarks.any((bookmark) =>
         bookmark.bookId == bookId && bookmark.pageNumber == pageNumber);
@@ -211,6 +245,16 @@ class AppState with ChangeNotifier {
           bookmark.bookId == bookId && bookmark.pageNumber == pageNumber);
     } catch (e) {
       return null;
+    }
+  }
+
+  Future<bool> toggleBookmarkForPage(int bookId, int pageNumber) async {
+    final existingBookmark = getBookmarkForPage(bookId, pageNumber);
+
+    if (existingBookmark != null) {
+      return await removeBookmark(existingBookmark.id);
+    } else {
+      return await addBookmark(bookId, pageNumber);
     }
   }
 

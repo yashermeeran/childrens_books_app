@@ -1,4 +1,4 @@
-import 'book.dart'; // Add this import
+import 'book.dart';
 
 class Bookmark {
   final int id;
@@ -6,7 +6,7 @@ class Bookmark {
   final int bookId;
   final int pageNumber;
   final DateTime createdAt;
-  Book? book; // For UI display purposes
+  Book? book;
 
   Bookmark({
     required this.id,
