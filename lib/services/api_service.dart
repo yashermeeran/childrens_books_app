@@ -187,9 +187,62 @@ class ApiService {
     }
   }
 
-  getBookmarks() {}
+  Future<List<Bookmark>> getBookmarks() async {
+    final userId = await getUserId();
+    if (userId == null) {
+      throw Exception('User not logged in');
+    }
 
-  addBookmark(int bookId, int pageNumber) {}
+    final headers = await _getHeaders();
+    final response = await http.get(
+      Uri.parse('$baseUrl/bookmarks/user/$userId'),
+      headers: headers,
+    );
 
-  removeBookmark(int bookmarkId) {}
+    if (response.statusCode == 200) {
+      final List<dynamic> data = jsonDecode(response.body);
+      return data.map((json) => Bookmark.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to load bookmarks: ${response.body}');
+    }
+  }
+
+  Future<Bookmark> addBookmark(int bookId, int pageNumber) async {
+    final userId = await getUserId();
+    if (userId == null) {
+      throw Exception('User not logged in');
+    }
+
+    final headers = await _getHeaders();
+    final response = await http.post(
+      Uri.parse('$baseUrl/bookmarks'),
+      headers: headers,
+      body: jsonEncode({
+        'userId': userId,
+        'bookId': bookId,
+        'pageNumber': pageNumber,
+      }),
+    );
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      final data = jsonDecode(response.body);
+      return Bookmark.fromJson(data);
+    } else {
+      throw Exception('Failed to add bookmark: ${response.body}');
+    }
+  }
+
+  Future<Map<String, dynamic>> removeBookmark(int bookmarkId) async {
+    final headers = await _getHeaders();
+    final response = await http.delete(
+      Uri.parse('$baseUrl/bookmarks/user/$bookmarkId'),
+      headers: headers,
+    );
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception('Failed to remove bookmark: ${response.body}');
+    }
+  }
 }

@@ -64,7 +64,6 @@ class AppState with ChangeNotifier {
     notifyListeners();
   }
 
-  // Fetch initial data
   Future<void> fetchInitialData() async {
     await Future.wait([
       fetchCategories(),
@@ -137,9 +136,7 @@ class AppState with ChangeNotifier {
         setLoading(false);
         return _bookPages[bookId]!;
       }
-
       final totalPages = await _apiService.getBookTotalPages(bookId);
-
       List<BookPage> pages = [];
       for (int i = 1; i <= totalPages; i++) {
         final page = await _apiService.getBookContent(bookId, i);
@@ -223,7 +220,6 @@ class AppState with ChangeNotifier {
     try {
       await _apiService.removeBookmark(bookmarkId);
       _bookmarks.removeWhere((bookmark) => bookmark.id == bookmarkId);
-
       setLoading(false);
       notifyListeners();
       return true;
