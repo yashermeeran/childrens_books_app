@@ -53,7 +53,6 @@ class MyApp extends StatelessWidget {
         '/book-detail': (context) => const BookDetailScreen(),
         '/bookmarks': (context) => const BookmarksScreen(),
         '/profile': (context) => const ProfileScreen(),
-        '/reader': (context) => const ReaderScreen(),
         '/category': (context) => const CategoryScreen(),
       },
     );

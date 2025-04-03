@@ -24,7 +24,6 @@ class BookDetailScreen extends StatelessWidget {
               color: isBookmarked ? Colors.yellow : null,
             ),
             onPressed: () {
-              // Add bookmark for the first page if not already bookmarked
               if (!isBookmarked) {
                 appState.addBookmark(book.id, 1);
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -34,7 +33,6 @@ class BookDetailScreen extends StatelessWidget {
                   ),
                 );
               } else {
-                // Find and remove the bookmark
                 final bookmark =
                     bookmarks.firstWhere((b) => b.bookId == book.id);
                 appState.removeBookmark(bookmark.id);
