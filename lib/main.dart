@@ -54,6 +54,7 @@ class MyApp extends StatelessWidget {
         '/bookmarks': (context) => const BookmarksScreen(),
         '/profile': (context) => const ProfileScreen(),
         '/category': (context) => const CategoryScreen(),
+        '/reader': (context) => const ReaderScreen(),
       },
     );
   }
