@@ -127,6 +127,7 @@ class ApiService {
     }
   }
 
+  // Get book details
   Future<Book> getBookDetails(int bookId) async {
     final headers = await _getHeaders();
     final response = await http.get(
@@ -142,21 +143,26 @@ class ApiService {
     }
   }
 
+  // Get book content (single page)
   Future<BookPage> getBookContent(int bookId, int pageNumber) async {
+    print('Fetching content for book ID: $bookId, page: $pageNumber');
     final headers = await _getHeaders();
     final response = await http.get(
       Uri.parse('$baseUrl/books/$bookId/content?page=$pageNumber'),
       headers: headers,
     );
 
+    print('Response: ${response.body}');
+
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
-      return BookPage.fromJson(data, pageNumber);
+      return BookPage.fromJson(data);
     } else {
       throw Exception('Failed to load book content: ${response.body}');
     }
   }
 
+  // Get total pages for a book
   Future<int> getBookTotalPages(int bookId) async {
     final headers = await _getHeaders();
     final response = await http.get(
@@ -187,6 +193,7 @@ class ApiService {
     }
   }
 
+  // Get user's bookmarks
   Future<List<Bookmark>> getBookmarks() async {
     final userId = await getUserId();
     if (userId == null) {
@@ -207,6 +214,7 @@ class ApiService {
     }
   }
 
+  // Add bookmark
   Future<Bookmark> addBookmark(int bookId, int pageNumber) async {
     final userId = await getUserId();
     if (userId == null) {
@@ -232,12 +240,15 @@ class ApiService {
     }
   }
 
+  // Remove bookmark
   Future<Map<String, dynamic>> removeBookmark(int bookmarkId) async {
     final headers = await _getHeaders();
     final response = await http.delete(
-      Uri.parse('$baseUrl/bookmarks/user/$bookmarkId'),
+      Uri.parse('$baseUrl/bookmarks/$bookmarkId'),
       headers: headers,
     );
+
+    print('Response: ${response.statusCode}');
 
     if (response.statusCode == 200) {
       return jsonDecode(response.body);

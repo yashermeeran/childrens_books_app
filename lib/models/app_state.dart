@@ -128,33 +128,6 @@ class AppState with ChangeNotifier {
     }
   }
 
-  Future<List<BookPage>> fetchBookContent(int bookId) async {
-    setLoading(true);
-
-    try {
-      if (_bookPages.containsKey(bookId)) {
-        setLoading(false);
-        return _bookPages[bookId]!;
-      }
-      final totalPages = await _apiService.getBookTotalPages(bookId);
-      List<BookPage> pages = [];
-      for (int i = 1; i <= totalPages; i++) {
-        final page = await _apiService.getBookContent(bookId, i);
-        pages.add(page);
-      }
-
-      _bookPages[bookId] = pages;
-
-      setLoading(false);
-      notifyListeners();
-      return pages;
-    } catch (e) {
-      setLoading(false);
-      notifyListeners();
-      return [];
-    }
-  }
-
   Future<BookPage> fetchBookPage(int bookId, int pageNumber) async {
     setLoading(true);
 
@@ -225,7 +198,6 @@ class AppState with ChangeNotifier {
       return true;
     } catch (e) {
       setLoading(false);
-      notifyListeners();
       return false;
     }
   }

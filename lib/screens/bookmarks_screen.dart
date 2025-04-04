@@ -20,13 +20,6 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
     });
   }
 
-  void _openBookDetails(Book book) {
-    Navigator.of(context).pushNamed(
-      '/book-detail',
-      arguments: book,
-    );
-  }
-
   void _openBookReader(Book book, int pageNumber) {
     Navigator.of(context).pushNamed(
       '/reader',
