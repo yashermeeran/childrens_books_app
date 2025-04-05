@@ -19,7 +19,7 @@ class _ReaderScreenState extends State<ReaderScreen> {
   BookPage? _currentPage;
   int _totalPages = 0;
   bool _isLoading = true;
-  double _fontSize = 18.0; // Default font size
+  double _fontSize = 18.0;
   bool _isInitialized = false;
 
   @override
@@ -177,7 +177,6 @@ class _ReaderScreenState extends State<ReaderScreen> {
                 IconButton(
                   icon: const Icon(Icons.text_fields),
                   onPressed: () {
-                    // Font size adjustment dialog
                     showDialog(
                       context: context,
                       builder: (ctx) => AlertDialog(
@@ -243,7 +242,6 @@ class _ReaderScreenState extends State<ReaderScreen> {
                     child: SafeArea(
                       child: Stack(
                         children: [
-                          // Page content
                           Center(
                             child: Padding(
                               padding: const EdgeInsets.all(24),
@@ -257,7 +255,6 @@ class _ReaderScreenState extends State<ReaderScreen> {
                               ),
                             ),
                           ),
-                          // Page number
                           Positioned(
                             bottom: 16,
                             left: 0,
@@ -282,7 +279,6 @@ class _ReaderScreenState extends State<ReaderScreen> {
                               ),
                             ),
                           ),
-                          // Navigation controls
                           if (_showControls)
                             Positioned(
                               bottom: 24,
