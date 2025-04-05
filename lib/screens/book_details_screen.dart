@@ -73,7 +73,7 @@ class BookDetailScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'By ${book.author}',
+                    '${book.author}',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                           color: Colors.grey[600],
                         ),
@@ -102,7 +102,6 @@ class BookDetailScreen extends StatelessWidget {
                   const SizedBox(height: 8),
                   _buildDetailRow(context, 'Category', book.category),
                   _buildDetailRow(context, 'Language', 'English'),
-                  _buildDetailRow(context, 'Age Range', '3-8 years'),
                   const SizedBox(height: 32),
                   SizedBox(
                     width: double.infinity,
