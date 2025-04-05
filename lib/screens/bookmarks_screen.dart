@@ -23,7 +23,10 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
   void _openBookReader(Book book, int pageNumber) {
     Navigator.of(context).pushNamed(
       '/reader',
-      arguments: book,
+      arguments: {
+        'book': book,
+        'pageNumber': pageNumber,
+      },
     );
   }
 

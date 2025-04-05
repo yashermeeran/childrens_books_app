@@ -110,7 +110,10 @@ class BookDetailScreen extends StatelessWidget {
                       onPressed: () {
                         Navigator.of(context).pushNamed(
                           '/reader',
-                          arguments: book,
+                          arguments: {
+                            'book': book,
+                            'pageNumber': 1,
+                          },
                         );
                       },
                       style: ElevatedButton.styleFrom(

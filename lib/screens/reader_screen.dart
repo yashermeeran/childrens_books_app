@@ -34,12 +34,17 @@ class _ReaderScreenState extends State<ReaderScreen> {
   }
 
   Future<void> _initReader() async {
-    final book = ModalRoute.of(context)!.settings.arguments as Book;
-    final appState = Provider.of<AppState>(context, listen: false);
+    final args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final book = args['book'] as Book;
+    final initialPageNumber = args['pageNumber'] as int? ?? 1;
 
     setState(() {
+      _currentPageNumber = initialPageNumber;
       _isLoading = true;
     });
+
+    final appState = Provider.of<AppState>(context, listen: false);
 
     try {
       final page = await appState.fetchBookPage(book.id, _currentPageNumber);
@@ -70,7 +75,9 @@ class _ReaderScreenState extends State<ReaderScreen> {
   Future<void> _loadPage(int pageNumber) async {
     if (pageNumber < 1 || pageNumber > _totalPages) return;
 
-    final book = ModalRoute.of(context)!.settings.arguments as Book;
+    final args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final book = args['book'] as Book;
     final appState = Provider.of<AppState>(context, listen: false);
 
     setState(() {
@@ -124,7 +131,9 @@ class _ReaderScreenState extends State<ReaderScreen> {
   void _toggleBookmark() async {
     if (_currentPage == null) return;
 
-    final book = ModalRoute.of(context)!.settings.arguments as Book;
+    final args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final book = args['book'] as Book;
     final appState = Provider.of<AppState>(context, listen: false);
 
     final success =
@@ -150,7 +159,9 @@ class _ReaderScreenState extends State<ReaderScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final book = ModalRoute.of(context)!.settings.arguments as Book;
+    final args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final book = args['book'] as Book;
     final appState = Provider.of<AppState>(context);
 
     final hasNextPage = _currentPageNumber < _totalPages;
