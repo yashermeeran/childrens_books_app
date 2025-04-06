@@ -1,9 +1,7 @@
 import 'package:childrens_book_app/models/app_state.dart';
-import 'package:childrens_book_app/models/category.dart';
 import 'package:childrens_book_app/screens/book_details_screen.dart';
 import 'package:childrens_book_app/screens/book_list_screen.dart';
 import 'package:childrens_book_app/screens/bookmarks_screen.dart';
-import 'package:childrens_book_app/screens/home_screen.dart';
 import 'package:childrens_book_app/screens/profile_screen.dart';
 import 'package:childrens_book_app/screens/reader_screen.dart';
 import 'package:childrens_book_app/widgets/main_navigation.dart';

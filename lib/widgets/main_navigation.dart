@@ -3,7 +3,6 @@ import 'package:childrens_book_app/screens/category_screen.dart';
 import 'package:childrens_book_app/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 import '../screens/home_screen.dart';
-import '../models/app_state.dart';
 
 class MainNavigation extends StatefulWidget {
   const MainNavigation({super.key});
